@@ -52,8 +52,8 @@ To create a secure, decentralized system that enables role-based access to medic
 
 **Deepika Uike**  
 Email: uikeyriya842@gmail.com  
-LinkedIn: [linkedin.com/in/deepika-uike](www.linkedin.com/in/deepika-uike-2395bb264)  
-GitHub: [github.com/deepikauike](https://github.com/007uikey/blockchain-cloud-security)
+LinkedIn: [www.linkedin.com/in/deepika-uike-2395bb264](www.linkedin.com/in/deepika-uike-2395bb264)  
+GitHub: [https://github.com/007uikey/blockchain-cloud-security](https://github.com/007uikey/blockchain-cloud-security)
 
 ---
 
