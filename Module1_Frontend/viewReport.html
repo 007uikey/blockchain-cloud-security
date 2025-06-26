@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Reports</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f4f6f8;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    button {
+      padding: 6px 12px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0b7dda;
+    }
+  </style>
+</head>
+<body>
+
+<h2>My Reports</h2>
+<nav onclick="window.location.href='index.html'">🔙 Back to Dashboard</nav>
+<table>
+  <thead>
+    <tr>
+      <th>Sr. No.</th>
+      <th>Report Name</th>
+      <th>Date & Time</th>
+      <th>Doctor ID</th>
+      <th>Download</th>
+    </tr>
+  </thead>
+  <tbody id="reportTableBody">
+    <!-- Reports will be populated here -->
+  </tbody>
+</table>
+
+<script>
+  const userId = localStorage.getItem("user_id"); // You must store this on login
+
+  async function fetchReports() {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/get_patient_reports", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ patient_id: userId })
+      });
+
+      const data = await response.json();
+      const tbody = document.getElementById("reportTableBody");
+      tbody.innerHTML = "";
+
+      if (data.reports && data.reports.length > 0) {
+        data.reports.forEach((report, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${report.file_name || "Diagnosis File"}</td>
+            <td>${new Date(report.timestamp).toLocaleString()}</td>
+            <td>${report.doctor_name || "Unknown"} - ${report.doctor_id || "N/A"}</td>
+            <td><button onclick="downloadDecryptedReport('${report.s3_key}', '${userId}')">Download</button></td>
+          `;
+
+          tbody.appendChild(row);
+        });
+      } else {
+        tbody.innerHTML = `<tr><td colspan="5">No reports found.</td></tr>`;
+      }
+    } catch (error) {
+      console.error("Error fetching reports:", error);
+      alert("Failed to fetch reports.");
+    }
+  }
+
+  async function downloadDecryptedReport(s3Key, userId) {
+    console.log("S3 Key:", s3Key);
+    console.log("User ID:", userId);
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/download_report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ s3_key: s3Key, patient_id: userId })
+      });
+
+      if (!response.ok) {
+        throw new Error("Download failed");
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "report.txt";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      console.log("Download button clicked!")
+    } catch (err) {
+      alert("Failed to download decrypted report.");
+      console.error(err);
+    }
+  }
+
+  fetchReports();
+</script>
+
+</body>
+</html>

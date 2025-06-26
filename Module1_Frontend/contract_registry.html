@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contract Registry</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+  <script src="abi.js"></script>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input{ padding: 8px; margin: 4px; }
+    button { padding: 8px; margin: 4px; background-color: rgb(173, 45, 232); }
+    .contract { border: 1px solid #ccc; padding: 10px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <nav><button onclick="window.location.href='index.html'">🔙 Back to Dashboard</button></nav>
+  <h2>🧾 Contract Registry</h2>
+
+  <div>
+    <input id="name" placeholder="Contract Name">
+    <input id="address" placeholder="Contract Address">
+    <input id="version" placeholder="Version (e.g., v1.0)">
+    <input id="reason" placeholder="Upgrade Reason">
+    <button onclick="addContract()">Add Contract</button>
+  </div>
+
+  <h3>📜 Registered Contracts</h3>
+  <div id="contractsList"></div>
+</body>
+<script>
+    let web3;
+    let contract;
+
+    const contractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+    const abi = [
+      {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "contractAddress",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "version",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "reason",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          }
+        ],
+        "name": "ContractAdded",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "contractAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "version",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "reason",
+            "type": "string"
+          }
+        ],
+        "name": "addContract",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "admin",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "contracts",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "contractAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "version",
+            "type": "string"
+          },
+          {
+            "internalType": "bool",
+            "name": "isActive",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "upgradeReason",
+            "type": "string"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getAllContracts",
+        "outputs": [
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "internalType": "address",
+                "name": "contractAddress",
+                "type": "address"
+              },
+              {
+                "internalType": "string",
+                "name": "version",
+                "type": "string"
+              },
+              {
+                "internalType": "bool",
+                "name": "isActive",
+                "type": "bool"
+              },
+              {
+                "internalType": "uint256",
+                "name": "timestamp",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "upgradeReason",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct ContractRegistry.ContractInfo[]",
+            "name": "",
+            "type": "tuple[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+  
+    ]
+    window.addEventListener("load", async () => {
+        if (window.ethereum) {
+            web3 = new Web3(window.ethereum);
+            await ethereum.request({ method: "eth_requestAccounts" });
+            contract = new web3.eth.Contract(abi, contractAddress);
+            loadContracts();
+        } else {
+            alert("Please install MetaMask!");
+        }
+    });
+
+    async function addContract() {
+        const name = document.getElementById("name").value;
+        const addr = document.getElementById("address").value;
+        const version = document.getElementById("version").value;
+        const reason = document.getElementById("reason").value;
+
+        const accounts = await web3.eth.getAccounts();
+
+        await contract.methods
+        .addContract(name, addr, version, reason)
+        .send({ from: accounts[0] });
+
+        loadContracts();
+    }
+
+    async function loadContracts() {
+        const listDiv = document.getElementById("contractsList");
+        listDiv.innerHTML = "";
+
+        const contracts = await contract.methods.getAllContracts().call();
+
+        contracts.forEach((c, index) => {
+            const div = document.createElement("div");
+            div.className = "contract";
+            div.innerHTML = `
+            <strong>${c.name}</strong> (${c.version})<br>
+            📍 Address: ${c.contractAddress}<br>
+            🕒 Timestamp: ${new Date(c.timestamp * 1000).toLocaleString()}<br>
+            🧾 Reason: ${c.upgradeReason}<br>
+            ✅ Active: ${c.isActive}<br>
+            <button onclick="deactivateContract(${index})">Deactivate</button>
+            `;
+            listDiv.appendChild(div);
+        });
+    }
+
+    async function deactivateContract(index) {
+        const accounts = await web3.eth.getAccounts();
+        await contract.methods.deactivateContract(index).send({ from: accounts[0] });
+        loadContracts();
+    }
+
+</script>
+</html>

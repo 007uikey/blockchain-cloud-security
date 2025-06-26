@@ -1,0 +1,113 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "E:\\7thsem\\Mega project\\blockchain_project\\contracts\\HealthcareRBAC.sol": {
+      "lastModificationDate": 1745329609648,
+      "contentHash": "b842b65ad5bccd8f10430ffc02afef81",
+      "sourceName": "contracts/HealthcareRBAC.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "HealthcareRBAC"
+      ]
+    },
+    "E:\\7thsem\\Mega project\\blockchain_project\\contracts\\ContractManager.sol": {
+      "lastModificationDate": 1747406489791,
+      "contentHash": "3420f210db9a712c22192db8647d64d4",
+      "sourceName": "contracts/ContractManager.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ContractManager"
+      ]
+    },
+    "E:\\7thsem\\Mega project\\blockchain_project\\contracts\\ContractRegistry.sol": {
+      "lastModificationDate": 1748668868306,
+      "contentHash": "2de44b93451e118cf9b2e684d7f618ae",
+      "sourceName": "contracts/ContractRegistry.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ContractRegistry"
+      ]
+    }
+  }
+}

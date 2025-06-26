@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Healthcare</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+</head>
+<body>
+  <!-- Registration Section -->
+  <div id="registerSection">
+    <h2>Register</h2>
+    <form id="registerForm">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Register</button>
+    </form>
+    <div class="extra-buttons">
+    <button id="switchToLogin">Already have an account? Login</button>
+    </div>
+  </div>
+
+  <!-- Login Section -->
+  <div id="loginSection" style="display: none;">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="loginUsername" placeholder="Username" required />
+      <input type="password" id="loginPassword" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div class="extra-buttons">
+    <button id="connectAdmin">Login as Admin (MetaMask)</button>
+    <button id="switchToRegister">Don't have an account? Register</button>
+    </div>
+  </div>
+
+  <!-- Dashboard Section -->
+  <div class='RoleDashboard' id="dashboardSection" style="display: none;">
+    <h2>Dashboard</h2>
+    <div style="text-align: right; margin-bottom: 10px; cursor: pointer;">
+      <nav id="logoutBtn">🔙</nav>
+    </div>
+    <p><strong>Username:</strong> <span id="displayUsername"></span></p>
+    <p><strong>User ID:</strong> <span id="displayUserId"></span></p>
+    <p ><strong>Role:</strong> <span id="displayRole"></span></p>
+
+    <!-- Admin Controls -->
+    <div class='RoleDashboard' id="adminControls" style="display: none;">
+      <h3>Admin Controls - Role Assignment</h3>
+      <input type="text" id="targetUserId" placeholder="Enter User ID to Assign Role" />
+      <select id="roleSelect">
+        <option value="1">Doctor</option>
+        <option value="2">Patient</option>
+        <option value="3">LabTechnician</option>
+      </select>
+      <button id="assignRoleBtn">Assign Role</button>
+      <button onclick="window.location.href='audit_trail.html'">View Audit Trail</button>
+
+      <hr>
+      <button onclick="window.location.href='contract_registry.html'">Contrct Registry</button>
+    </div>
+
+    <div class='RoleDashboard' id="doctorDashboard" style="display: none;">
+      <h3>Doctor Dashboard</h3>
+      <form id="uploadForm">   <!-- ADD id="uploadForm" -->
+        <label for="patientIdInput">Enter Patient ID to upload report:</label>
+        <input type="text" id="patientIdInput" placeholder="Enter Patient ID">
+        <br>
+        <textarea id="diagnosisInput" placeholder="Enter Diagnosis"></textarea>
+        <textarea id="treatmentInput" placeholder="Enter Treatment"></textarea>
+        <br>
+        <label for="fileInput">Choose file to upload:</label>
+        <input type="file" id="fileInput">
+        <p id="uploadStatus"></p>
+        <div class="extra-buttons">
+          <button id="upload" onclick="uploadReport()">Upload Reports</button>
+            <!-- <button onclick="fetchAssignedPatients()">View Assigned Patients</button> -->
+          <ul id="patientList"></ul>
+        </div>
+      </form>  
+    </div>
+      
+    <!-- Patient Dashboard -->
+    <div class='RoleDashboard' id="patientDashboard" style="display: none;">
+      <h3>Patient Dashboard</h3>
+      <button  id="getReport" onclick="window.location.href='viewReport.html'">View My Records</button>
+      <!-- <button onclick="downloadFile()">Download Files</button>-->
+    </div>
+    
+  </div>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

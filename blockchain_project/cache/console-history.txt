@@ -1,0 +1,43 @@
+await contract.admin()
+await contract.getUserRole("doc123"); 
+await contract.assignRole("doc123", 1); 
+await contract.admin();
+const contract = new ethers.Contract(contractAddress, abi, admin);
+const abi = (await artifacts.readArtifact("HealthcareRBAC")).abi;
+const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const [admin] = await ethers.getSigners();
+await contract.admin();
+await ethers.getContractAt("HealthcareRBAC", "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512");
+(await contract.admin()).toString()
+await contract.admin();
+const contract1 = await ethers.getContractAt("HealthcareRBAC", "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+const contract = await ethers.getContractAt("HealthcareRBAC", "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+const contract = await ethers.getContractAt("HealthcareRBAC", " 0x5FbDB2315678afecb367f032d93F642f64180aa3");
+await contract.connect(doctor).updatePatientRecord(patient, "Flu", "Rest & Hydration",doctor);
+ await contract.assignRole(doctor, 1);
+const doctor = 'doctor120';
+await contract.assignRole(patient, 2);
+const patient = 'patient123';
+ await contract.admin();
+const contract = await ethers.getContractAt("HealthcareRBAC", "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9");
+.exit
+mk;jdjjbhjbfhjskl
+exit
+await contract.connect(doctor).updatePatientRecord23");
+await contract.connect(doctor).updatePatientRecord(patient, "Flu", "Rest & Hydration");
+await contract.getUserRole(doctor);
+await contract.assignRole(doctor, 1);
+const doctor = 'doctor120';
+await contract.getUserRole(patient);
+await contract.assignRole(patient, 2);
+const patient = 'patient123';
+await contract.admin();
+const contract = await ethers.getContractAt("HealthcareRBAC", "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9");
+const contract = await ethers.getContractAt("HealthcareRBAC", "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+await contract.admin();
+await contract.getUserRole("55-562787-72");
+await contract.getUserRole("5665-56773-99289");
+const patient = await contract.assignRole("63767-8938-7826", 2);
+const doctor = await contract.assignRole("5665-56773-99289", 1);
+await contract.assignRole("55-562787-72", 1);
+const contract = await ethers.getContractAt("HealthcareRBAC", "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512");

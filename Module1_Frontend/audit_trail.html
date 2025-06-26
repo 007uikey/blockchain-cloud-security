@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audit Trail</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    button {
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #loadingSpinner {
+      font-size: 20px;
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 80%;
+      max-width: 800px;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+<nav onclick="window.location.href='index.html'">🔙</nav>
+<h2>Audit Trail</h2>
+
+<!-- Spinner while loading -->
+<div id="loadingSpinner">Loading audit logs...</div>
+
+<!-- Table for audit logs -->
+<table id="auditTable" border="1">
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Action</th>
+      <th>Timestamp</th>
+    </tr>
+  </thead>
+  <tbody id="auditBody">
+    <!-- Data will be inserted here -->
+  </tbody>
+</table>
+
+<script>
+async function fetchAuditLogs() {
+  const response = await fetch("http://localhost:5000/get_audit_logs");
+  const data = await response.json();
+
+  const auditBody = document.getElementById("auditBody");
+  auditBody.innerHTML = ""; 
+
+  data.logs.forEach(log => {
+    const row = document.createElement("tr");
+    const userId = log.user_id || log.patient_id || "N/A"; 
+
+    row.innerHTML = `
+      <td>${userId}</td>
+      <td>${log.action}</td>
+      <td>${new Date(log.timestamp).toLocaleString()}</td>
+    `;
+
+    auditBody.appendChild(row);
+  });
+}
+
+fetchAuditLogs();
+</script>
+</body>
+</html>
